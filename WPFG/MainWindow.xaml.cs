@@ -48,17 +48,15 @@ namespace WPFG
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             Point[] points = new[] { 
-            new Point(0, 200),
-            new Point(0, 0),
-            new Point(300, 0),
-            new Point(350, 200),
-            new Point(400, 0),
-            new Point(600,100)
+                new Point(-600,600),
+                new Point(-200,600),
+                new Point(100,400),
+                new Point(300,0)
         };
             Point[] points2 = new[]{
-                new Point(0,200),
-                new Point(0,50),
-                new Point(200,10)
+                 new Point(-600, 600),
+                 new Point(0, 600),
+                 new Point(300, 0),
                 
             };
 
@@ -67,10 +65,11 @@ namespace WPFG
             BezierCurve b2 = new BezierCurve(points2, Grid);
             b2.draw();
 
+            
             b2.raiseGrade(b1);
             b2.draw();
 
-
+          
             if(b1.compareTo(b2)==true)
             MessageBox.Show("Curbele sunt egale");
             else
