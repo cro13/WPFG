@@ -5,21 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace WPFG
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    class BezierCurve
     {
+
+        private Point[] controlPoints;
+        private Grid G;
+
         PolyLineSegment GetBezierApproximation(Point[] controlPoints, int outputSegmentCount)
         {
             Point[] points = new Point[outputSegmentCount + 1];
@@ -39,27 +35,29 @@ namespace WPFG
             var P1 = GetBezierPoint(t, controlPoints, index + 1, count - 1);
             return new Point((1 - t) * P0.X + t * P1.X, (1 - t) * P0.Y + t * P1.Y);
         }
-        
-        public MainWindow()
+
+        public BezierCurve(Point[] points, Grid Grid)
         {
-            InitializeComponent();
+            
+            this.controlPoints = points;
+            this.G = Grid;
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
+
+        internal void draw()
         {
-            Point[] points = new[] { 
-            new Point(0, 200),
-            new Point(0, 0),
-            new Point(300, 0),
-            new Point(350, 200),
-            new Point(400, 0),
-            new Point(600,100)
-        };
 
-            BezierCurve b1 = new BezierCurve(points, Grid);
-            b1.draw();
-
-
+            var b = GetBezierApproximation(controlPoints, 256);
+            PathFigure pf = new PathFigure(b.Points[0], new[] { b }, false);
+            PathFigureCollection pfc = new PathFigureCollection();
+            pfc.Add(pf);
+            var pge = new PathGeometry();
+            pge.Figures = pfc;
+            Path p = new Path();
+            p.Data = pge;
+            p.Stroke = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+            //((G)sender).Children.Add(p);
+            G.Children.Add(p);
         }
     }
 }
