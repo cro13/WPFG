@@ -60,12 +60,12 @@ namespace WPFG
             G.Children.Add(p);
         }
 
-        internal bool compareTo(BezierCurve bc2)
+        internal bool compareTo(BezierCurve bc)
         {
             Point p, q;
             int i, j;
             i = j = 0;
-            while (i != controlPoints.Length && j != bc2.controlPoints.Length)
+            while (i != controlPoints.Length && j != bc.controlPoints.Length)
             {
                 p = controlPoints[i];
                 q = controlPoints[j];
@@ -74,12 +74,49 @@ namespace WPFG
                 i++;
                 j++;
             }
-            if (i != controlPoints.Length || j != bc2.controlPoints.Length)
+            if (i != controlPoints.Length || j != bc.controlPoints.Length)
                 return false;
            
             return true;
             
+        }
+
+        internal void raiseGrade(BezierCurve bc){
+            if (controlPoints.Length > bc.controlPoints.Length)
+            {
+                while (controlPoints.Length > bc.controlPoints.Length)
+                {
+                    int n = bc.controlPoints.Length;
+                    Point[] aux = new Point[n + 1];
+                    aux[0] = bc.controlPoints[0];
+                    aux[n] = bc.controlPoints[n - 1];
+                    for (int i = 1; i < n; i++)
+                    {
+                        aux[i].X = (i / (n + 1)) * bc.controlPoints[i - 1].X + (1 - (i / (n + 1))) * bc.controlPoints[i].X;
+                        aux[i].Y = (i / (n + 1)) * bc.controlPoints[i - 1].Y + (1 - (i / (n + 1))) * bc.controlPoints[i].Y;
+                    }
+                    bc.controlPoints = aux;
+                }
+            }
+            else
+            {
+                while (controlPoints.Length < bc.controlPoints.Length)
+                {
+                    int n = controlPoints.Length;
+                    Point[] aux = new Point[n + 1];
+                    aux[0] = controlPoints[0];
+                    aux[n] = controlPoints[n - 1];
+                    for (int i = 1; i < n; i++)
+                    {
+                        aux[i].X = (i / (n + 1)) * controlPoints[i - 1].X + (1 - (i / (n + 1))) * controlPoints[i].X;
+                        aux[i].Y = (i / (n + 1)) * controlPoints[i - 1].Y + (1 - (i / (n + 1))) * controlPoints[i].Y;
+                    }
+                    controlPoints = aux;
+                }
+            }
+
 
         }
+
     }
 }
