@@ -58,7 +58,13 @@ namespace WPFG
 
             BezierCurve b1 = new BezierCurve(points, Grid);
             b1.draw();
-
+            BezierCurve b2 = new BezierCurve(points, Grid);
+            b2.draw();
+            if(b1.compareTo(b2)==true)
+            MessageBox.Show("Egale");
+            //else
+           
+            
 
         }
     }

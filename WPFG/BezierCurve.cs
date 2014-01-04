@@ -59,5 +59,27 @@ namespace WPFG
             //((G)sender).Children.Add(p);
             G.Children.Add(p);
         }
+
+        internal bool compareTo(BezierCurve bc2)
+        {
+            Point p, q;
+            int i, j;
+            i = j = 0;
+            while (i != controlPoints.Length && j != bc2.controlPoints.Length)
+            {
+                p = controlPoints[i];
+                q = controlPoints[j];
+                if (p != q)
+                    return false;
+                i++;
+                j++;
+            }
+            if (i != controlPoints.Length || j != bc2.controlPoints.Length)
+                return false;
+           
+            return true;
+            
+
+        }
     }
 }
