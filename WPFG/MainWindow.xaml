@@ -1,8 +1,6 @@
 ﻿<Window x:Class="WPFG.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid x:Name="Grid" Loaded="Grid_Loaded">
-        
-    </Grid>
+        Title="MainWindow" Height="600" Width="800">
+    <Grid x:Name="Grid" Loaded="Grid_Loaded" Margin="0,0,-283,-281"/>
 </Window>

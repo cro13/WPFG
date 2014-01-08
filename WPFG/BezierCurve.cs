@@ -56,7 +56,7 @@ namespace WPFG
             Path p = new Path();
             p.Data = pge;
             p.Stroke = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-            //((G)sender).Children.Add(p);
+            p.StrokeThickness = 3;
             G.Children.Add(p);
         }
 
@@ -69,7 +69,7 @@ namespace WPFG
             {
                 p = controlPoints[i];
                 q = bc.controlPoints[j];
-                if (p != q)
+                if ((int)p.X != (int)q.X && (int)p.Y != (int)q.Y)
                     return false;
                 i++;
                 j++;
