@@ -67,6 +67,7 @@ namespace WPFG
         private void Ins1_Click_1(object sender, RoutedEventArgs e)
         {
             Grid.Children.Clear();
+            b2.draw();
             Point p = new Point(Convert.ToInt32(X1.Text), Convert.ToInt32(Y1.Text));
             int n = points.Length;
             Point [] temp = new Point [n];
