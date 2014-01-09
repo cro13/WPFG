@@ -46,7 +46,7 @@ namespace WPFG
 
         internal void draw()
         {
-
+            
             var b = GetBezierApproximation(controlPoints, 256);
             PathFigure pf = new PathFigure(b.Points[0], new[] { b }, false);
             PathFigureCollection pfc = new PathFigureCollection();
@@ -58,6 +58,26 @@ namespace WPFG
             p.Stroke = new SolidColorBrush(Color.FromRgb(255, 0, 0));
             p.StrokeThickness = 3;
             G.Children.Add(p);
+
+            int k=0;
+            int q = 1;
+            while (q != controlPoints.Length)
+            {
+                Line m = new Line();
+                m.Stroke = System.Windows.Media.Brushes.Green;
+                m.X1 = controlPoints[k].X;
+                m.Y1 = controlPoints[k].Y;
+                m.X2 = controlPoints[q].X;
+                m.Y2 = controlPoints[q].Y;
+                m.StrokeThickness = 2;
+                G.Children.Add(m);
+                k = q;
+                q++;
+
+            }
+
+
+
         }
 
         internal bool compareTo(BezierCurve bc)
@@ -69,7 +89,7 @@ namespace WPFG
             {
                 p = controlPoints[i];
                 q = bc.controlPoints[j];
-                if ((int)p.X != (int)q.X && (int)p.Y != (int)q.Y)
+                if ((int)p.X != (int)q.X || (int)p.Y != (int)q.Y)
                     return false;
                 i++;
                 j++;

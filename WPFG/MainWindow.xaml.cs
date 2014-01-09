@@ -20,26 +20,11 @@ namespace WPFG
     /// </summary>
     public partial class MainWindow : Window
     {
-        PolyLineSegment GetBezierApproximation(Point[] controlPoints, int outputSegmentCount)
-        {
-            Point[] points = new Point[outputSegmentCount + 1];
-            for (int i = 0; i <= outputSegmentCount; i++)
-            {
-                double t = (double)i / outputSegmentCount;
-                points[i] = GetBezierPoint(t, controlPoints, 0, controlPoints.Length);
-            }
-            return new PolyLineSegment(points, true);
-        }
-
-        Point GetBezierPoint(double t, Point[] controlPoints, int index, int count)
-        {
-            if (count == 1)
-                return controlPoints[index];
-            var P0 = GetBezierPoint(t, controlPoints, index, count - 1);
-            var P1 = GetBezierPoint(t, controlPoints, index + 1, count - 1);
-            return new Point((1 - t) * P0.X + t * P1.X, (1 - t) * P0.Y + t * P1.Y);
-        }
-        
+        Point[] points = new Point[0];
+        Point[] points2 = new Point[0];
+        BezierCurve b1;
+        BezierCurve b2;
+        int i = 0; int j = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -47,35 +32,94 @@ namespace WPFG
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            Point[] points = new[] { 
-                new Point(-600,600),
-                new Point(-200,600),
-                new Point(100,400),
-                new Point(300,0)
-        };
-            Point[] points2 = new[]{
+            //points = new[] { 
+                //new Point(-600,600),
+                //new Point(-200,600),
+                //new Point(100,400),
+                //new Point(300,0)
+       // };
+            /* points2 = new[]{
                  new Point(-600, 600),
                  new Point(0, 600),
-                 new Point(300, 0),
+                 new Point(200, 0),
                 
-            };
+            };*/
 
-            BezierCurve b1 = new BezierCurve(points, Grid);
-            b1.draw();
-            BezierCurve b2 = new BezierCurve(points2, Grid);
-            b2.draw();
+             /* BezierCurve b1 = new BezierCurve(points, Grid);
+             b1.draw();
+              BezierCurve b2 = new BezierCurve(points2, Grid);
+              b2.draw();
 
             
-            b2.raiseGrade(b1);
-            b2.draw();
+              b2.raiseGrade(b1);*/
+            // BezierCurve b2 = new BezierCurve(points2, Grid);
+           //  b2.draw();
 
           
-            if(b1.compareTo(b2)==true)
+            /*if(b1.compareTo(b2)==true)
             MessageBox.Show("Curbele sunt egale");
             else
-                MessageBox.Show("Curbele nu sunt egale");
+            MessageBox.Show("Curbele nu sunt egale");*/
             
 
+        }
+
+        private void Ins1_Click_1(object sender, RoutedEventArgs e)
+        {
+            Grid.Children.Clear();
+            Point p = new Point(Convert.ToInt32(X1.Text), Convert.ToInt32(Y1.Text));
+            int n = points.Length;
+            Point [] temp = new Point [n];
+            
+            for (int k = 0; k < n; k++)
+                temp[k] = points[k];
+
+            points = new Point[temp.Length + 1];
+
+            for (int k = 0; k < n; k++)
+                points[k] = temp[k];
+
+            points[points.Length -1] = p;
+
+            b1 = new BezierCurve(points, Grid);
+            b1.draw();
+            
+
+        }
+
+        private void Ins2_Click_1(object sender, RoutedEventArgs e)
+        {
+                Grid.Children.Clear();
+                b1.draw();
+            Point p = new Point(Convert.ToInt32(X2.Text), Convert.ToInt32(Y2.Text));
+            int n = points2.Length;
+            Point[] temp = new Point[n];
+
+            for (int k = 0; k < n; k++)
+                temp[k] = points2[k];
+
+            points2 = new Point[temp.Length + 1];
+
+            for (int k = 0; k < n; k++)
+                points2[k] = temp[k];
+
+            
+            points2[points2.Length - 1] = p;
+
+            b2 = new BezierCurve(points2, Grid);
+            b2.draw();
+
+
+        }
+
+        private void Compare_Click_1(object sender, RoutedEventArgs e)
+        {
+            b2.raiseGrade(b1);
+
+            if (b1.compareTo(b2) == true)
+                MessageBox.Show("Curbele sunt egale");
+            else
+                MessageBox.Show("Curbele nu sunt egale");
         }
     }
 }
