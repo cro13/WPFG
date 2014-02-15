@@ -1,6 +1,5 @@
-<b>Draw Bezier Curves using WPF(C#)</b>
-====<br><br>
-
+<b>Draw Bezier Curves using WPF(C#)</b><br
+====
 <b>INPUT</b><br>
 Point coordinates for 2 bezier curves<br>
 <b>OUTPUT</b><br>
